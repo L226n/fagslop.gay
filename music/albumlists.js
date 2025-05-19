@@ -25,7 +25,7 @@ async function main() {
 		cover_container.classList.add("covercontainer");
 		
 		const album_cover = document.createElement("img");	// Create cover node
-		album_cover.src = `../covers/${item.toString()}.webp`;	// Source is just i.webp
+		album_cover.src = `/covers/${item.toString()}.webp`;	// Source is just i.webp
 		album_cover.classList.add("albumcover");
 		
 		const data_container = document.createElement("div");
@@ -59,7 +59,7 @@ async function main() {
 		album_date.classList.add("albumdate");
 		
 		const album_rating = document.createElement("img");	// Create new element for rating
-		let img_rating = `../images/${album_json["items"][item]["rating"].toString()}stars.webp`;	// Get album link
+		let img_rating = `/images/${album_json["items"][item]["rating"].toString()}stars.webp`;	// Get album link
 		album_rating.src = img_rating;	// Set the source to the image link
 		album_rating.classList.add("albumrating");	// Add it to albumrating class
 		
