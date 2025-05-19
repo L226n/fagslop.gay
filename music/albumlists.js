@@ -1,6 +1,6 @@
-async function fetchJSONData() {
+async function fetchJSONData(page) {
 	try {
-		const response = await fetch('albums.json');
+		const response = await fetch(`albums/albums${page.toString()}.json`);
 		if (!response.ok) {
 			throw new Error(`HTTP error! Status: ${response.status}`);
 		}
@@ -11,9 +11,9 @@ async function fetchJSONData() {
 	}
 }
 
-async function main() {
-	
-	const album_json = await fetchJSONData();	// Get albums JSON
+async function getNextPage() {
+	if (next_page >= total_pages) {return;}
+	const album_json = await fetchJSONData(next_page.toString());	// Get albums JSON
 	const albums_container = document.getElementById("albumscontainer");	// Get container for all albums
 	
 	for (const item in album_json["items"]) {
@@ -25,7 +25,7 @@ async function main() {
 		cover_container.classList.add("covercontainer");
 		
 		const album_cover = document.createElement("img");	// Create cover node
-		album_cover.src = `/covers/${item.toString()}.webp`;	// Source is just i.webp
+		album_cover.src = `/covers/${page_offset.toString()}.webp`;	// Source is just i.webp
 		album_cover.classList.add("albumcover");
 		
 		const data_container = document.createElement("div");
@@ -75,8 +75,17 @@ async function main() {
 		album_container.appendChild(data_container);	// Append data div
 		album_container.appendChild(text_fade);
 		albums_container.insertBefore(album_container, albums_container.firstChild);	// And then append that to the parent div
+		page_offset++;
 	}
-	delete label;
+	next_page++;
+}
+
+async function main() {
+	
+	getNextPage();
 	
 }
+var total_pages = 1;
+var next_page = 0;
+var page_offset = 0;
 main();
