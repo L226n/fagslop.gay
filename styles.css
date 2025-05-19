@@ -1,1 +1,57 @@
-
+#albumscontainer {
+	display: flex;
+}
+.albumcontainer {
+	position: relative;
+	display: flex;
+	width: 30vw;
+	height: 9vw;
+	margin-right: 5vw;
+	border-style: dashed;
+}
+.fadecontainer {
+	position: absolute;
+	top: 0px;
+	left: 0px;
+	width: 30vw;
+	height: 9vw;
+	background: #ffffff;
+	background: linear-gradient(90deg,rgba(255, 255, 255, 0) 90%, rgba(255, 255, 255, 1) 98%);
+	z-index: 10;
+	pointer-events: none;
+}
+.albumcover {
+	height: 7vw;
+	padding: 1vw;
+}
+.covercontainer {
+	height: 9vw;
+}
+.albumlabel {
+	font-size: 1.2vw;
+	line-height: 1vw;
+	white-space: nowrap;
+}
+.albumdate {
+	position: absolute;
+	top: 3.8vw;
+	left: 7.5vw;
+	font-size: 0.85vw;
+}
+.datacontainer {
+	position: absolute;
+	left: 9vw;
+	top: 1vw;
+	height: 8vw;
+	width: 21vw;
+	overflow-x: hidden;
+	z-index: 0;
+}
+.albumrating {
+	position: absolute;
+	top: 5vw;
+	height: 1.5vw;
+}
+a{
+	color: blue;
+}
