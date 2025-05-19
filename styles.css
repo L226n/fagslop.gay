@@ -1,17 +1,20 @@
 #albumscontainer {
 	display: flex;
 	margin-top: 2vw;
+	flex-wrap: wrap;
+	width: 110%;
 }
 .albumcontainer {
 	position: relative;
 	display: flex;
-	width: 30vw;
-	height: 9vw;
-	margin-right: 5vw;
+	margin-right: 4vw;
+	margin-bottom: 3vw;
 	border-style: dashed;
 	border-color: #333333;
 	background: lightgrey;
 	filter: drop-shadow(0.1vw 0.1vw 10px #000000);
+	height: 9vw;
+	min-width: 30vw;
 }
 .fadecontainer {
 	position: absolute;
@@ -29,6 +32,7 @@
 	padding: 1vw;
 }
 .covercontainer {
+	position: absolute;
 	height: 9vw;
 }
 .albumlabel {
@@ -64,6 +68,7 @@ a {
 	text-align: center;
 	position: relative;
 	top: 2vw;
+	padding-bottom: 2vw;
 }
 #loadbuttoncontainer {
 	display: inline-block;
@@ -132,4 +137,7 @@ a {
 }
 h1 {
 	font-size: 2vw;
+}
+html {
+	overflow-x: hidden;
 }
