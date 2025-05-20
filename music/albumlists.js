@@ -1,18 +1,20 @@
 async function fetchJSONData(page) {
-	try {
-		const response = await fetch(`albums/albums${page.toString()}.json`);
-		if (!response.ok) {
-			throw new Error(`HTTP error! Status: ${response.status}`);
-		}
-		return await response.json();
+	const response = await fetch(`albums/albums${page.toString()}.json`);
+	if (!response.ok) {
+		throw new Error(`HTTP error ${response.status}`);
 	}
-	catch (error) {
-		console.error('Error fetching JSON:', error);
-	}
+	return await response.json();
 }
 
 async function getNextPage() {
-	const album_json = await fetchJSONData(next_page.toString());	// Get albums JSON
+	
+	try {
+		var album_json = await fetchJSONData(next_page.toString());	// Get albums JSON
+	}
+	catch (error) {
+		console.error(`Couldnt fetch albums${next_page.toString()}.json`);
+		return;
+	}
 	const albums_container = document.getElementById("albumscontainer");	// Get container for all albums
 	
 	for (const item in album_json["items"]) {
@@ -33,8 +35,11 @@ async function getNextPage() {
 		let title = album_json["items"][item]["title"];
 		let artist = album_json["items"][item]["artist"];
 		
+		let title_link = title.replaceAll("/", "%2F").replaceAll(" ", "+");
+		let artist_link = artist.replaceAll("/", "%2F").replaceAll(" ", "+");
+		
 		const title_url = document.createElement("a");
-		title_url.href = `https://www.last.fm/music/${artist}/${title}`;
+		title_url.href = `https://www.last.fm/music/${artist_link}/${title_link}`;
 		title_url.target = "_blank";
 		
 		const artist_url = document.createElement("a");

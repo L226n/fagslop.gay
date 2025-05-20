@@ -136,14 +136,16 @@ a {
 	text-align: center;
 }
 #linkscontainer {
+	width: 110%;
 	margin-top: 2vw;
 	display: flex;
+	flex-wrap: wrap;
 }
 .linkbox {
 	text-align: center;
 	padding: 1vw;
-	max-width: 14%;
-	min-width: 14%;
+	margin-right: 2vw;
+	margin-bottom: 2vw;
 }
 h1 {
 	font-size: 2vw;
