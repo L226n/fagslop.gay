@@ -112,7 +112,7 @@ a {
 	height: 10vw;
 	padding: 1vw;
 }
-#avatarcontainer {
+.dottedbox {
 	background: lightgrey;
 	border-style: dashed;
 	border-color: #333333;
@@ -135,9 +135,22 @@ a {
 	padding: 1vw;
 	text-align: center;
 }
+#linkscontainer {
+	margin-top: 2vw;
+	display: flex;
+}
+.linkbox {
+	text-align: center;
+	padding: 1vw;
+	max-width: 14%;
+	min-width: 14%;
+}
 h1 {
 	font-size: 2vw;
 }
 html {
 	overflow-x: hidden;
+}
+footer {
+	text-align: center;
 }

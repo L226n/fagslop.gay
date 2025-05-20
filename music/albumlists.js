@@ -12,7 +12,6 @@ async function fetchJSONData(page) {
 }
 
 async function getNextPage() {
-	if (next_page >= total_pages) {return;}
 	const album_json = await fetchJSONData(next_page.toString());	// Get albums JSON
 	const albums_container = document.getElementById("albumscontainer");	// Get container for all albums
 	
@@ -74,7 +73,7 @@ async function getNextPage() {
 		album_container.appendChild(cover_container);	// Append cover image
 		album_container.appendChild(data_container);	// Append data div
 		album_container.appendChild(text_fade);
-		albums_container.insertBefore(album_container, albums_container.firstChild);	// And then append that to the parent div
+		albums_container.appendChild(album_container);	// And then append that to the parent div
 		page_offset++;
 	}
 	next_page++;
@@ -85,7 +84,6 @@ async function main() {
 	getNextPage();
 	
 }
-var total_pages = 1;
 var next_page = 0;
 var page_offset = 0;
 main();
