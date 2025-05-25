@@ -43,7 +43,7 @@ async function getNextPage() {
 		title_url.target = "_blank";
 		
 		const artist_url = document.createElement("a");
-		artist_url.href = `https://www.last.fm/music/${artist}`;
+		artist_url.href = `https://www.last.fm/music/${artist_link}`;
 		artist_url.target = "_blank";
 		
 		const album_title = document.createElement("h3");	// Create label for title
