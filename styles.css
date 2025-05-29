@@ -7,7 +7,7 @@
 .albumcontainer {
 	position: relative;
 	display: flex;
-	margin-right: 4vw;
+	margin-right: 3vw;
 	margin-bottom: 3vw;
 	border-style: dashed;
 	border-color: #333333;
@@ -128,7 +128,7 @@ a {
 	font-size: 1vw;
 }
 .ratingimg {
-	width: 7vw;
+	width: 6.5vw;
 }
 .rating {
 	display: inline-block;
@@ -146,6 +146,28 @@ a {
 	padding: 1vw;
 	margin-right: 2vw;
 	margin-bottom: 2vw;
+	max-width: 15.4vw;
+	min-width: 15.4vw;
+}
+#rangecontainer {
+	padding: 1vw;
+	margin-top: 2vw;
+}
+.nsfwcover {
+	filter: blur(0.5vw);
+}
+.nsfwtoggle {
+	position: absolute;
+	top: 0.5vw;
+	left: 0.5vw;
+	height: 7.5vw;
+	width: 7.5vw;
+	z-index: 10;
+	opacity: 0;
+	cursor: pointer;
+}
+.nsfwtoggle:checked ~ .nsfwcover {
+	filter: blur(0);
 }
 h1 {
 	font-size: 2vw;
@@ -155,4 +177,7 @@ html {
 }
 footer {
 	text-align: center;
+}
+body {
+	padding: 0 1vw 0;
 }

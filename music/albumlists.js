@@ -1,5 +1,5 @@
-async function fetchJSONData(page) {
-	const response = await fetch(`albums/albums${page.toString()}.json`);
+async function fetchJSONData(file) {
+	const response = await fetch(file);
 	if (!response.ok) {
 		throw new Error(`HTTP error ${response.status}`);
 	}
@@ -8,16 +8,9 @@ async function fetchJSONData(page) {
 
 async function getNextPage() {
 	
-	try {
-		var album_json = await fetchJSONData(next_page.toString());	// Get albums JSON
-	}
-	catch (error) {
-		console.error(`Couldnt fetch albums${next_page.toString()}.json`);
-		return;
-	}
-	const albums_container = document.getElementById("albumscontainer");	// Get container for all albums
+	let album_slice = album_json["items"].slice(current_page, current_page + page_size);
 	
-	for (const item in album_json["items"]) {
+	for (const item in album_slice) {
 		
 		const album_container = document.createElement("div");	// Create container for single album
 		album_container.classList.add("albumcontainer");	// Mark as albumdiv for css
@@ -26,14 +19,14 @@ async function getNextPage() {
 		cover_container.classList.add("covercontainer");
 		
 		const album_cover = document.createElement("img");	// Create cover node
-		album_cover.src = `/covers/${page_offset.toString()}.webp`;	// Source is just i.webp
+		album_cover.src = `/covers/${current_page.toString()}.webp`;	// Source is just i.webp
 		album_cover.classList.add("albumcover");
 		
 		const data_container = document.createElement("div");
 		data_container.classList.add("datacontainer");
 		
-		let title = album_json["items"][item]["title"];
-		let artist = album_json["items"][item]["artist"];
+		let title = album_slice[item]["title"];
+		let artist = album_slice[item]["artist"];
 		
 		let title_link = title.replaceAll("/", "%2F").replaceAll(" ", "+");
 		let artist_link = artist.replaceAll("/", "%2F").replaceAll(" ", "+");
@@ -59,11 +52,11 @@ async function getNextPage() {
 		artist_url.appendChild(album_artist);
 		
 		const album_date = document.createElement("h5");
-		album_date.innerHTML = new Date(album_json["items"][item]["date"] * 1000).toLocaleDateString();
+		album_date.innerHTML = new Date(album_slice[item]["date"] * 1000).toLocaleDateString();
 		album_date.classList.add("albumdate");
 		
 		const album_rating = document.createElement("img");	// Create new element for rating
-		let img_rating = `/images/${album_json["items"][item]["rating"].toString()}stars.webp`;	// Get album link
+		let img_rating = `/images/${album_slice[item]["rating"].toString()}stars.webp`;	// Get album link
 		album_rating.src = img_rating;	// Set the source to the image link
 		album_rating.classList.add("albumrating");	// Add it to albumrating class
 		
@@ -74,21 +67,57 @@ async function getNextPage() {
 		data_container.appendChild(artist_url);	// Append artist too bc its seperate
 		data_container.appendChild(album_date);
 		data_container.appendChild(album_rating);	// Also append the rating to this thing
+		if (album_slice[item]["nsfw"]) {
+			album_cover.classList.add("nsfwcover");
+			const toggle_nsfw = document.createElement("input");
+			toggle_nsfw.type = "checkbox";
+			toggle_nsfw.classList.add("nsfwtoggle");
+			cover_container.appendChild(toggle_nsfw);
+		}
 		cover_container.appendChild(album_cover);	// Add image to cover container
 		album_container.appendChild(cover_container);	// Append cover image
 		album_container.appendChild(data_container);	// Append data div
 		album_container.appendChild(text_fade);
 		albums_container.appendChild(album_container);	// And then append that to the parent div
-		page_offset++;
+		current_page++;
 	}
-	next_page++;
+}
+
+function set_size() {
+	label.innerHTML = `Albums per page: ${this.value}`;
+	current_page = 0;
+	albums_container.textContent = "";
+	page_size = this.value;
+	getNextPage();
+	
 }
 
 async function main() {
 	
-	getNextPage();
+	let slider = document.getElementById("sizerange");
+	slider.value = page_size;
+	slider.oninput = set_size;
+	label.innerHTML = `Albums per page: ${page_size.toString()}`;
+	
+	try {
+		album_json = await fetchJSONData("albums/albums.json");	// Get albums JSON
+		getNextPage();
+	}
+	catch (error) {
+		console.error("Couldnt fetch albums/albums.json");
+		return;
+	}
 	
 }
-var next_page = 0;
-var page_offset = 0;
+
+const url_params = new URLSearchParams(window.location.search);
+let page_size = parseInt(url_params.get("page_size"));
+if (!page_size) {
+	page_size = 18;
+}
+
+
+var label = document.getElementById("sliderlabel");
+const albums_container = document.getElementById("albumscontainer");	// Get container for all albums
+var current_page = 0
 main();
