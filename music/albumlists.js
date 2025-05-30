@@ -6,9 +6,32 @@ async function fetchJSONData(file) {
 	return await response.json();
 }
 
+function filterFunction() {
+	var input, filter, ul, li, a, i;
+	input = document.getElementById("myInput");
+	filter = input.value.toUpperCase();
+	div = document.getElementById("dropdownResults");
+	a = div.getElementsByTagName("a");
+	for (i = 0; i < a.length; i++) {
+		txtValue = a[i].textContent || a[i].innerText;
+		if (txtValue.toUpperCase().indexOf(filter) > -1) {
+			a[i].style.display = "";
+		}
+		else {
+		  a[i].style.display = "none";
+		}
+	}
+} 
+
 async function getNextPage() {
 	
-	let album_slice = album_json["items"].slice(current_page, current_page + page_size);
+	let album_slice = [];
+	if (artist_filters.length == 0) {
+		album_slice = album_json["items"].slice(current_page, current_page + page_size);
+	}else{
+		album_slice = filtered_list.slice(current_page, current_page + page_size);
+	}
+	let result_counter = 0;
 	
 	for (const item in album_slice) {
 		
@@ -19,14 +42,14 @@ async function getNextPage() {
 		cover_container.classList.add("covercontainer");
 		
 		const album_cover = document.createElement("img");	// Create cover node
-		album_cover.src = `/covers/${current_page.toString()}.webp`;	// Source is just i.webp
+		album_cover.src = `/covers/${album_slice[item]["id"].toString()}.webp`;	// Source is just i.webp
 		album_cover.classList.add("albumcover");
 		
 		const data_container = document.createElement("div");
 		data_container.classList.add("datacontainer");
 		
 		let title = album_slice[item]["title"];
-		let artist = album_slice[item]["artist"];
+		let artist = album_json["artists"][album_slice[item]["artist"]][0];
 		
 		let title_link = title.replaceAll("/", "%2F").replaceAll(" ", "+");
 		let artist_link = artist.replaceAll("/", "%2F").replaceAll(" ", "+");
@@ -78,8 +101,19 @@ async function getNextPage() {
 		album_container.appendChild(cover_container);	// Append cover image
 		album_container.appendChild(data_container);	// Append data div
 		album_container.appendChild(text_fade);
+		if (album_slice[item]["discogs"]) {
+			let discogs = document.createElement("a");
+			discogs.href = `https://www.discogs.com/release/${album_slice[item]["discogs"].toString()}`;
+			discogs.target = "_blank";
+			let discogs_img = document.createElement("img");
+			discogs_img.src = "discogs.webp";
+			discogs_img.classList.add("discogs");
+			discogs.appendChild(discogs_img);
+			album_container.appendChild(discogs);
+		}
 		albums_container.appendChild(album_container);	// And then append that to the parent div
 		current_page++;
+		result_counter++;
 	}
 }
 
@@ -87,12 +121,47 @@ function set_size() {
 	label.innerHTML = `Albums per page: ${this.value}`;
 	current_page = 0;
 	albums_container.textContent = "";
-	page_size = this.value;
+	page_size = parseInt(this.value);
 	getNextPage();
 	
 }
 
+function clearFilters() {
+	artist_filters = [];
+	filtered_list = [];
+	current_page = 0;
+	albums_container.textContent = "";
+	getNextPage();
+}
+
+function addArtistFilter() {
+	artist_filters.push(this.innerHTML);
+	filtered_list = [];
+	for (const item in album_json["items"]) {
+		if (artist_filters.includes(album_json["artists"][album_json["items"][item]["artist"]][0])) {
+			filtered_list.push(album_json["items"][item]);
+		}
+	}
+	current_page = 0;
+	albums_container.textContent = "";
+	getNextPage();
+	//console.log(artist_filters);
+}
+
 async function main() {
+	
+	const input = document.getElementById('myInput');
+	const menu = document.getElementById('dropdownResults');
+
+	input.addEventListener('focus', () => {
+		menu.style.display = 'block';
+	});
+
+	document.addEventListener('click', (e) => {
+		if (!input.contains(e.target) && !menu.contains(e.target)) {
+			menu.style.display = 'none';
+		}
+	});
 	
 	let slider = document.getElementById("sizerange");
 	slider.value = page_size;
@@ -107,6 +176,18 @@ async function main() {
 		console.error("Couldnt fetch albums/albums.json");
 		return;
 	}
+	const dropdown = document.getElementById("dropdownResults");
+	
+	let temp = album_json["artists"].slice();
+	const names = temp.map(item => item[0]);
+	names.sort((a, b) => a[0].localeCompare(b[0]));
+	
+	for (const item in names) {
+		let name = document.createElement("a");
+		name.innerHTML = names[item];
+		name.onclick = addArtistFilter;
+		dropdown.appendChild(name);
+	}
 	
 }
 
@@ -116,7 +197,8 @@ if (!page_size) {
 	page_size = 18;
 }
 
-
+var filtered_list = [];
+var artist_filters = [];
 var label = document.getElementById("sliderlabel");
 const albums_container = document.getElementById("albumscontainer");	// Get container for all albums
 var current_page = 0

@@ -72,8 +72,13 @@
 		</div>
 		
 		<div id="rangecontainer" class="dottedbox">
-			<input id="sizerange" type="range" min="3" max="90" step="3" class="slider">
-			<i id="sliderlabel">Albums per page: </i>
+			<input id="sizerange" type="range" min="3" max="90" step="3" style="margin-top:auto;width:10vw;height:2vw;">
+			<i id="sliderlabel" style="margin-top:auto;padding-left:1vw;font-size:1vw;-ms-transform: translateY(-25%); transform: translateY(-25%);">Albums per page: </i>
+			<div id="myDropdown" class="dropdown-content">
+				<input type="text" placeholder="Filter artists.." id="myInput" onkeyup="filterFunction()">
+				<div id="dropdownResults"></div>
+			</div>
+			<button onclick="clearFilters()" id="myButton">Clear filters</button>
 		</div>
 		
 		<div id="albumscontainer"></div>

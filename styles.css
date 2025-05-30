@@ -152,6 +152,10 @@ a {
 #rangecontainer {
 	padding: 1vw;
 	margin-top: 2vw;
+	position: relative;
+	z-index: 100;
+	height: 2vw;
+	display: flex;
 }
 .nsfwcover {
 	filter: blur(0.5vw);
@@ -180,4 +184,55 @@ footer {
 }
 body {
 	padding: 0 1vw 0;
+}
+
+
+#myDropdown {
+	font-size: 1vw;
+	padding-left: 2vw;
+	margin-top: auto;
+}
+#myInput {
+	height: 1.5vw;
+	width: 15vw;
+	font-size: 0.8vw;
+}
+
+.dropdown-content {
+	max-width: 16vw;
+	z-index: 30;
+}
+
+#dropdownResults {
+	display: none;
+	max-width: 100%;
+	white-space: nowrap;
+	overflow-x: ellipsis;
+	overflow-y: scroll;
+	margin-top: 0.5vw;
+	max-height: 20vw;
+	background: lightgrey;
+	border-style: dashed;
+	border-color: #333333;
+	padding: 0.5vw;
+	filter: drop-shadow(0.1vw 0.1vw 10px #000000);
+}
+
+#dropdownResults a {
+	z-index: 30;
+	display: block;
+	text-decoration: underline;
+	cursor: pointer;
+}
+#myButton {
+	margin-left: 2vw;
+	font-size: 0.8vw;
+	width: 7vw;
+}
+.discogs {
+	position: absolute;
+	right: 0.5vw;
+	bottom: 0.5vw;
+	z-index: 100;
+	width: 2vw;
 }
