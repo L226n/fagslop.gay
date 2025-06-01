@@ -236,3 +236,23 @@ body {
 	z-index: 100;
 	width: 2vw;
 }
+.fakelink {
+	color: blue;
+	text-decoration: underline;
+	cursor: pointer;
+}
+.hideimage {
+	display: none;
+}
+
+.hideimagex {
+	width: 25vw;
+}
+.hideimagey {
+	height: 25vw;
+}
+
+
+.hideimage:target {
+	display: block;
+}
