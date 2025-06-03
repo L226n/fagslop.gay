@@ -26,7 +26,7 @@ function filterFunction() {
 async function getNextPage() {
 	
 	let album_slice = [];
-	if (artist_filters.length == 0) {
+	if (!filtercoll & !artistfiltered) {
 		album_slice = album_json["items"].slice(current_page, current_page + page_size);
 	}else{
 		album_slice = filtered_list.slice(current_page, current_page + page_size);
@@ -127,25 +127,44 @@ function set_size() {
 }
 
 function clearFilters() {
+	artistfiltered = false;
 	artist_filters = [];
-	filtered_list = [];
-	current_page = 0;
-	albums_container.textContent = "";
-	getNextPage();
+	updatefromfilters();
 }
 
 function addArtistFilter() {
+	artistfiltered = true;
 	artist_filters.push(this.innerHTML);
+	updatefromfilters();
+}
+
+function updatefromfilters() {
 	filtered_list = [];
-	for (const item in album_json["items"]) {
-		if (artist_filters.includes(album_json["artists"][album_json["items"][item]["artist"]][0])) {
-			filtered_list.push(album_json["items"][item]);
+	if (artistfiltered & filtercoll) {
+		for (const item in album_json["items"]) {
+			if (artist_filters.includes(album_json["artists"][album_json["items"][item]["artist"]][0]) & album_json["items"][item]["discogs"]) {
+				filtered_list.push(album_json["items"][item]);
+			}
+		}
+	}
+	else if (artistfiltered & !filtercoll) {
+		for (const item in album_json["items"]) {
+			if (artist_filters.includes(album_json["artists"][album_json["items"][item]["artist"]][0])) {
+				filtered_list.push(album_json["items"][item]);
+			}
+		}
+	}
+	else if (!artistfiltered & filtercoll) {
+		for (const item in album_json["items"]) {
+			if (album_json["items"][item]["discogs"]) {
+				filtered_list.push(album_json["items"][item]);
+			}
 		}
 	}
 	current_page = 0;
 	albums_container.textContent = "";
 	getNextPage();
-	//console.log(artist_filters);
+	
 }
 
 async function main() {
@@ -196,7 +215,21 @@ let page_size = parseInt(url_params.get("page_size"));
 if (!page_size) {
 	page_size = 18;
 }
+const collection = document.getElementById('collection')
 
+collection.addEventListener('change', (event) => {
+	if (event.currentTarget.checked) {
+		filtercoll = true;
+		updatefromfilters();
+		
+	} else {
+		filtercoll = false;
+		updatefromfilters();
+	}
+})
+
+var artistfiltered = false;
+var filtercoll = false;
 var filtered_list = [];
 var artist_filters = [];
 var label = document.getElementById("sliderlabel");

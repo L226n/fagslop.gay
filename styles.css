@@ -256,3 +256,6 @@ body {
 .hideimage:target {
 	display: block;
 }
+.rangelabel {
+	margin-top:auto;margin-left:1vw;font-size:1vw;-ms-transform: translateY(-25%); transform: translateY(-25%);
+}
