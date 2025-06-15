@@ -164,6 +164,33 @@ function updatefromfilters() {
 	current_page = 0;
 	albums_container.textContent = "";
 	getNextPage();
+	if(showrates){getRatings();}
+	
+}
+
+async function getRatings() {
+	let album_slice = [];
+	if (!filtercoll & !artistfiltered) {
+		album_slice = album_json["items"];
+	}else{
+		album_slice = filtered_list;
+	}
+	let ratings = new Array(11).fill(0);
+	for (const item in album_slice) {
+		const rate = album_slice[item]["rating"]
+		ratings[rate*2]++;
+	}
+	const unit = 100/ratings.reduce((a, b) => Math.max(a, b), -Infinity);
+	
+	for (let i = 0; i < 11; i++) {
+		const bar = document.getElementById(`bc${(i/2).toString().replace(".", "-")}`);
+		bar.style = `width: ${(unit*ratings[i]).toString()}%;`;
+		bar.innerHTML = "";
+		const rate = document.createElement("p");
+		rate.innerHTML = ratings[i].toString();
+		rate.classList.add("thing");
+		bar.appendChild(rate);
+	}
 	
 }
 
@@ -228,11 +255,25 @@ collection.addEventListener('change', (event) => {
 	}
 })
 
+const rate = document.getElementById("rate");
+
+rate.addEventListener("change", (event) => {
+	showrates = !showrates;
+	if (showrates) {
+		ratingscontainer["style"] = "display: flex;";
+		getRatings();
+	}else{
+		ratingscontainer["style"] = "display: none;";
+	}
+})
+
 var artistfiltered = false;
 var filtercoll = false;
+var showrates = false;
 var filtered_list = [];
 var artist_filters = [];
 var label = document.getElementById("sliderlabel");
 const albums_container = document.getElementById("albumscontainer");	// Get container for all albums
+const ratingscontainer = document.getElementById("ratingschart");
 var current_page = 0
 main();

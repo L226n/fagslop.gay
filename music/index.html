@@ -90,6 +90,26 @@
 			<button onclick="clearFilters()" id="myButton">Clear filters</button>
 			<input id="collection" type="checkbox" style="margin-left:2vw;margin-right:-0.5vw;">
 			<i class="rangelabel">Only show physicals</i>
+			<input id="rate" type="checkbox">
+			<i id="ratebox" class="rangelabel">Show ratings</i>
+		</div>
+		
+		<div class="dottedbox" id="ratingschart", style="display: none;">
+			<div id="numberz">5<br>4.5<br>4<br>3.5<br>3<br>2.5<br>2<br>1.5<br>1<br>0.5<br>0</div>
+			<div id="barchart">
+				<div class="poo" id="bc5"></div>
+				<div class="poo" id="bc4-5"></div>
+				<div class="poo" id="bc4"></div>
+				<div class="poo" id="bc3-5"></div>
+				<div class="poo" id="bc3"></div>
+				<div class="poo" id="bc2-5"></div>
+				<div class="poo" id="bc2"></div>
+				<div class="poo" id="bc1-5"></div>
+				<div class="poo" id="bc1"></div>
+				<div class="poo" id="bc0-5"></div>
+				<div class="poo" id="bc0"></div>
+			</div>
+			<div id="count"></div>
 		</div>
 		
 		<div id="albumscontainer"></div>
