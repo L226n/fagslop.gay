@@ -176,9 +176,11 @@ async function getRatings() {
 		album_slice = filtered_list;
 	}
 	let ratings = new Array(11).fill(0);
+	let total = 0;
 	for (const item in album_slice) {
 		const rate = album_slice[item]["rating"]
 		ratings[rate*2]++;
+		total++;
 	}
 	const unit = 100/ratings.reduce((a, b) => Math.max(a, b), -Infinity);
 	
@@ -186,11 +188,26 @@ async function getRatings() {
 		const bar = document.getElementById(`bc${(i/2).toString().replace(".", "-")}`);
 		bar.style = `width: ${(unit*ratings[i]).toString()}%;`;
 		bar.innerHTML = "";
+		const ratebox = document.createElement("div");
+		ratebox.classList.add("thingco");
 		const rate = document.createElement("p");
-		rate.innerHTML = ratings[i].toString();
+		let percent = ratings[i]/total*100;
+		rate.innerHTML = `${ratings[i].toString()} (${percent.toFixed(0)}%)`;
 		rate.classList.add("thing");
-		bar.appendChild(rate);
+		ratebox.appendChild(rate);
+		bar.appendChild(ratebox);
 	}
+	const bar = document.getElementById("all");
+	const ratingsavg = [];
+	for (const item in ratings) {
+		for (let i = 0; i < ratings[item]; i++) {
+			ratingsavg.push(parseInt(item))
+		}
+	}
+	console.log(ratingsavg);
+	console.log(ratingsavg.length);
+	const avg = ratingsavg.reduce((partialSum, a) => partialSum + a, 0)/total/2;
+	bar.innerHTML = `${total.toString()} ratings, average at ${avg.toFixed(3)}`;
 	
 }
 

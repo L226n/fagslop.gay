@@ -6,53 +6,8 @@ async function fetchJSONData(file) {
 	return await response.json();
 }
 
-async function createEntries(json) {
-	const blogcontainer = document.getElementById("bodylol");
-	
-	for (const item in json) {
-		const entrybox = document.createElement("div");
-		entrybox.classList.add("dottedbox", "blogentry");
-		
-		const dropdowncontainer = document.createElement("div");
-		dropdowncontainer.classList.add("dropdowncontainer");
-
-		const dropdowncheck = document.createElement("input");
-		dropdowncheck["type"] = "checkbox";
-		dropdowncheck.classList.add("dropdowncheck");
-		dropdowncheck["name"] = `dropdown${item}`;
-		
-		dropdowncheck.onclick = function() {
-			const x = document.getElementById(this.getAttribute("name"));
-			const y = x.getAttribute("style");
-			console.log(y);
-			if (y == "display: none;") {
-				x["style"] = "display:block;";
-				x["name"] = "1";
-			}else{
-				console.log("hi");
-				x["style"] = "display:none;";
-				x["name"] = "0";
-			}
-		};
-		
-		dropdowncontainer.appendChild(dropdowncheck);
-		
-		const dropdown = document.createElement("div");
-		dropdown.classList.add("droparrow");
-		
-		dropdowncontainer.appendChild(dropdown);
-		entrybox.appendChild(dropdowncontainer);
-		
-		const entrydate = document.createElement("h2");
-		entrydate.classList.add("fakelink");
-		entrydate.innerHTML = json[item]["date"];
-		entrybox.appendChild(entrydate);
-		
-		const blogbody = document.createElement("i");
-		blogbody.classList.add("blogbody");
-		blogbody["style"] = "display:none;";
-		blogbody["name"] = "0";
-		blogbody["id"] = `dropdown${item}`;
+function getblog(blogbody, json, item) {
+	if (!json[`act${item}`]) {
 		for (const item2 in json[item]["body"].slice(0, -1)) {
 			if (json[item]["body"][item2][0] == "$") {
 				const linkscontainer = document.createElement("div");
@@ -84,6 +39,67 @@ async function createEntries(json) {
 			}
 		}
 		blogbody.insertAdjacentHTML("beforeend", `${json[item]["body"].slice(-1)[0]}`);
+		console.log(item);
+		json[`act${item}`] = true;
+	}
+}
+
+async function createEntries(json) {
+	const blogcontainer = document.getElementById("bodylol");
+	
+	for (const item in json) {
+		const entrybox = document.createElement("div");
+		entrybox.classList.add("dottedbox", "blogentry");
+		
+		const dropdowncontainer = document.createElement("div");
+		dropdowncontainer.classList.add("dropdowncontainer");
+
+		const dropdowncheck = document.createElement("input");
+		dropdowncheck["type"] = "checkbox";
+		dropdowncheck.classList.add("dropdowncheck");
+		dropdowncheck["name"] = `dropdown${item}`;
+		
+		dropdowncheck.onclick = function() {
+			const x = document.getElementById(this.getAttribute("name"));
+			const y = x.getAttribute("style");
+			if (y == "display: none;") {
+				x["style"] = "display:block;";
+				x["name"] = "1";
+				getblog(x, json, parseInt(this.getAttribute("name").slice(8)));
+			}else{
+				x["style"] = "display:none;";
+				x["name"] = "0";
+			}
+		};
+		
+		dropdowncontainer.appendChild(dropdowncheck);
+		
+		const dropdown = document.createElement("div");
+		dropdown.classList.add("droparrow");
+		
+		dropdowncontainer.appendChild(dropdown);
+		entrybox.appendChild(dropdowncontainer);
+		
+		const text = document.createElement("div");
+		text.classList.add("textthing");
+		
+		const entrydate = document.createElement("h2");
+		entrydate.classList.add("fakelink", "blogdate");
+		entrydate.innerHTML = json[item]["date"];
+		text.appendChild(entrydate);
+		
+		const emoji = document.createElement("h2");
+		emoji.classList.add("blogemoji");
+		emoji.innerHTML = json[item]["emoji"];
+		text.appendChild(emoji);
+		
+		entrybox.appendChild(text);
+		
+		const blogbody = document.createElement("i");
+		blogbody.classList.add("blogbody");
+		blogbody["style"] = "display:none;";
+		blogbody["name"] = "0";
+		blogbody["id"] = `dropdown${item}`;
 		entrybox.appendChild(blogbody);
 		
 		blogcontainer.appendChild(entrybox);
