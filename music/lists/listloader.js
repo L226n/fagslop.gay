@@ -1,68 +1,7 @@
-async function fetchJSONData(file) {
-	const response = await fetch(file);
-	if (!response.ok) {
-		throw new Error(`HTTP error ${response.status}`);
-	}
-	return await response.json();
-}
-async function createList(parent, json) {
-	let obj = await fetchJSONData(`lists/${json}`);
-	let numbered = obj["numbered"];
-	for (const item in obj["items"]) {
-		let newentry = document.createElement("div");newentry.classList.add("listentry");parent.appendChild(newentry);
-		let value = document.createElement("h1");value.innerHTML=(parseInt(item)+1);value.classList.add("listnumber");newentry.appendChild(value);
-		let img = document.createElement("img");img.classList.add("entrythumb");img.setAttribute("src", obj["items"][item]["thumb"]);
-		newentry.appendChild(img);
-		let titledescdiv = document.createElement("div");titledescdiv.classList.add("tdd");newentry.append(titledescdiv);
-		let desctitle = document.createElement("h2");desctitle.classList.add("desctitle");desctitle.innerHTML=obj["items"][item]["title"];titledescdiv.appendChild(desctitle);
-		let descdesc = document.createElement("i");descdesc.classList.add("descdesc");descdesc.innerHTML=obj["items"][item]["desc"];titledescdiv.appendChild(descdesc);
-	}
-}
-async function main() {
-	listything = await fetchJSONData("lists.json");
-	body = document.getElementById("bodylol");
-	for (const item in listything) {
-		let maindiv = document.createElement("div");
-		maindiv["id"] = `list${item}`;
-		maindiv.classList.add("musiclist", "dottedbox");
-		maindiv.setAttribute("data-json", listything[item]["json"]);
-		
-		let title = document.createElement("div");
-		title.classList.add("musicsub");
-		
-		let arrowhead = document.createElement("p");arrowhead.classList.add("arrowy");arrowhead.innerHTML="⮘";title.appendChild(arrowhead);
-		let thgojosadic = document.createElement("input");thgojosadic.classList.add("faggot");thgojosadic["type"] = "checkbox";thgojosadic.setAttribute("data-virgin", "yeah");title.appendChild(thgojosadic);
-		let img = document.createElement("img");img.classList.add("thumby");img["style"]="width:10vw;";img["src"]=listything[item]["thumb"];title.appendChild(img);
-		let vert = document.createElement("div");vert.classList.add("vertflex");
-		let title2 = document.createElement("h1");title2.innerHTML=listything[item]["title"];vert.appendChild(title2);
-		let desc = document.createElement("i");desc.innerHTML=listything[item]["desc"];vert.appendChild(desc);
-		title.appendChild(vert);
-		let listbody = document.createElement("div");listbody.classList.add("listbody");listbody["style"]="display:none;";
-		
-		maindiv.appendChild(title);
-		maindiv.appendChild(listbody);
-		body.appendChild(maindiv);
-	}
-	const checkboxes = document.querySelectorAll('.faggot');
-	checkboxes.forEach(checkbox => {
-	  checkbox.addEventListener('change', function () {
-		if (this.checked) {
-			if (this.getAttribute("data-virgin") == "yeah") {
-				let poop = this.parentElement.parentElement.getAttribute("data-json");
-				createList(this.parentElement.parentElement.querySelectorAll(".listbody")[0], poop);
-				this.setAttribute("data-virgin", "nah");
-			}
-			this.parentElement.querySelectorAll("i")[0]["style"] = "display:none;";
-			this.parentElement.parentElement.querySelectorAll(".listbody")[0]["style"] = "display:block;";
-			this.parentElement.querySelectorAll(".thumby")[0]["style"] = "width:5.5vw;height:5.5vw;";
-			this.parentElement.querySelectorAll("p")[0].innerHTML = "⮛";
-		} else {
-			this.parentElement.querySelectorAll("i")[0]["style"] = "display:block;";
-			this.parentElement.parentElement.querySelectorAll(".listbody")[0]["style"] = "display:none;";
-			this.parentElement.querySelectorAll(".thumby")[0]["style"] = "width:10vw;height:10vw;";
-			this.parentElement.querySelectorAll("p")[0].innerHTML = "⮘";
-		}
-	  });
-	});
-}
+async function fetchJSONData(file){const response=await fetch(file);if(!response.ok){throw new Error(`HTTP error ${response.status}`);}
+return await response.json();}
+async function createList(parent,json){let obj=await fetchJSONData(`lists/${json}`);let numbered=obj["numbered"];for(const item in obj["items"]){let newentry=document.createElement("div");newentry.classList.add("listentry");parent.appendChild(newentry);let value=document.createElement("h1");value.innerHTML=(parseInt(item)+1);value.classList.add("listnumber");newentry.appendChild(value);let img=document.createElement("img");img.classList.add("entrythumb");img.setAttribute("src",obj["items"][item]["thumb"]);newentry.appendChild(img);let titledescdiv=document.createElement("div");titledescdiv.classList.add("tdd");newentry.append(titledescdiv);let desctitle=document.createElement("h2");desctitle.classList.add("desctitle");desctitle.innerHTML=obj["items"][item]["title"];titledescdiv.appendChild(desctitle);let descdesc=document.createElement("i");descdesc.classList.add("descdesc");descdesc.innerHTML=obj["items"][item]["desc"];titledescdiv.appendChild(descdesc);}}
+async function main(){listything=await fetchJSONData("lists.json");body=document.getElementById("bodylol");for(const item in listything){let maindiv=document.createElement("div");maindiv["id"]=`list${item}`;maindiv.classList.add("musiclist","dottedbox");maindiv.setAttribute("data-json",listything[item]["json"]);let title=document.createElement("div");title.classList.add("musicsub");let arrowhead=document.createElement("p");arrowhead.classList.add("arrowy");arrowhead.innerHTML="⮘";title.appendChild(arrowhead);let thgojosadic=document.createElement("input");thgojosadic.classList.add("faggot");thgojosadic["type"]="checkbox";thgojosadic.setAttribute("data-virgin","yeah");title.appendChild(thgojosadic);let img=document.createElement("img");img.classList.add("thumby");img["style"]="width:10vw;";img["src"]=listything[item]["thumb"];title.appendChild(img);let vert=document.createElement("div");vert.classList.add("vertflex");let title2=document.createElement("h1");title2.innerHTML=listything[item]["title"];vert.appendChild(title2);let desc=document.createElement("i");desc.innerHTML=listything[item]["desc"];vert.appendChild(desc);title.appendChild(vert);let listbody=document.createElement("div");listbody.classList.add("listbody");listbody["style"]="display:none;";maindiv.appendChild(title);maindiv.appendChild(listbody);body.appendChild(maindiv);}
+const checkboxes=document.querySelectorAll('.faggot');checkboxes.forEach(checkbox=>{checkbox.addEventListener('change',function(){if(this.checked){if(this.getAttribute("data-virgin")=="yeah"){let poop=this.parentElement.parentElement.getAttribute("data-json");createList(this.parentElement.parentElement.querySelectorAll(".listbody")[0],poop);this.setAttribute("data-virgin","nah");}
+this.parentElement.querySelectorAll("i")[0]["style"]="display:none;";this.parentElement.parentElement.querySelectorAll(".listbody")[0]["style"]="display:block;";this.parentElement.querySelectorAll(".thumby")[0]["style"]="width:5.5vw;height:5.5vw;";this.parentElement.querySelectorAll("p")[0].innerHTML="⮛";}else{this.parentElement.querySelectorAll("i")[0]["style"]="display:block;";this.parentElement.parentElement.querySelectorAll(".listbody")[0]["style"]="display:none;";this.parentElement.querySelectorAll(".thumby")[0]["style"]="width:10vw;height:10vw;";this.parentElement.querySelectorAll("p")[0].innerHTML="⮘";}});});}
 main();
