@@ -3,6 +3,8 @@ const units=si?['kB','MB','GB','TB','PB','EB','ZB','YB']:['KiB','MiB','GiB','TiB
 function truncate(str,maxLength){return str.length>maxLength?str.slice(0,maxLength-3)+"...":str;}
 async function fetchJSONData(file){const response=await fetch(file);if(!response.ok){throw new Error(`HTTP error ${response.status}`);}
 return await response.json();}
+async function requestalbum(){const album=document.getElementById("inalbum").value;const artist=document.getElementById("inartist").value;const email=document.getElementById("inemail").value;const gloop=document.getElementById("submit");if(album&&artist&&email){let v=`https://file-req.lu-00e2n.workers.dev/?referer=fagslop.gay&album=${encodeURIComponent(album)}&artist=${artist}${encodeURIComponent("+AND+")}${encodeURIComponent(email)}`;let response=await fetch(v);console.log(response);gloop.innerHTML="Request submitted!";return}
+gloop.innerHTML="Please fill in all boxes";}
 async function showFolders(json,parent,tits=true){for(const item in json){if(item.slice(-5)!="/size"){let div=document.createElement("div");div.classList.add("fsitem");let v=parent.parentElement.parentElement.getAttribute("data-path");if(v){div.setAttribute("data-path",`${v}  ${item.replaceAll("\\", "\\\\").replaceAll(" ", "\\ ")}`);}else{div.setAttribute("data-path",item.replaceAll("\\","\\\\").replaceAll(" ","\\ "));}
 let spandiv=document.createElement("div");spandiv.classList.add("spandiv");if(tits){let thingidk=document.createElement("p");thingidk.innerHTML="└";thingidk.classList.add("fuckknows");spandiv.appendChild(thingidk);}
 let img=document.createElement("img");let folder=false;if(json[item]){img["src"]="/images/folder.svg";folder=true;}else{if(item.slice(-4)==".jpg"||item.slice(-4)==".png"){img["src"]="/images/image.svg";}
