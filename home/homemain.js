@@ -6,9 +6,15 @@ function kill() {
 function saveKirk() {
 	kirk.src="kirk/kirklife.webp";
 }
+function noAudio() {
+	bg.pause();
+}
 var kirk = document.getElementById("kirky");
 var crosshair = document.getElementById("crosshair");
 var gunshot = new Audio("kirk/died.mp3");
+var bg = new Audio("music.mp3");
+bg.loop = true;
+bg.play()
 document.body.onpointermove = event => {
 	const { clientX, clientY } = event;
 		crosshair.animate({
