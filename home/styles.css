@@ -1,0 +1,23 @@
+#kirky {
+	width: 15vw;
+	cursor: pointer;
+}
+#interractivekirkwidget {
+	width: 30vw;
+	height: 30vw;
+	display:flex;
+	flex-direction:row;
+}
+#crosshair {
+	display: none;
+	position: absolute;
+	width: 5vw;
+	cursor: pointer;
+}
+#kirky:hover ~ #crosshair {
+	display: block;
+}
+.rock {
+	width: 4vw;
+	height: 4vw;
+}
