@@ -13,6 +13,7 @@
 	position: absolute;
 	width: 5vw;
 	cursor: pointer;
+	pointer-events: none;
 }
 #kirky:hover ~ #crosshair {
 	display: block;
@@ -22,7 +23,21 @@
 	height: 4vw;
 }
 html {
-	background-image: url("background.png");
 	background-size: 100% 100%;
 	color: white;
 }
+.upmarquee {
+	background-image: url("store_deconstruct.png");
+}
+#acrossmarquee {
+	background-image: url("store_freedom.png");
+}
+@keyframes grow {
+  0% { transform: scale(1); }
+  50% { transform: scale(1.5); }
+}
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
