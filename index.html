@@ -3,21 +3,21 @@
 <html>
 	<head>
 		<link rel=stylesheet href=styles.css>
-		<script src="https://unpkg.com/marquee3000/marquee3k.min.js"></script>
 	</head>
 	<body>
 		<img id="image" src="kiwi.webp" onclick="siteBegin()">
 		<div id="entered" style="display:none;">
-		<div class="upmarquee marquee3k" data-direction=up data-speed=30>
-			<div class="marquee3k" id="acrossmarquee" data-speed=30>
+		<marquee class="upmarquee" direction=up scrollamount=30>
+			<marquee id="acrossmarquee" scrollamount=30>
 				<button style="height: 3vw;"onclick="noAudio()">NO MUSIC</button>
-			</div>	
-			<div class="upmarquee marquee3k" data-direction=right data-speed=200>
+			</marquee>	
+			<marquee class="upmarquee" direction=right scrollamount=200>
 				<button onclick="alert('hi')">jdsafhdsuifhuf</button>
-			</div>	
-		</div>
-		<img src="derpy.gif" style="position:absolute;top:5vw;left:50%;animation: spin 2s linear infinite;">
-		<img src="vinyl.gif" style="position:absolute;top:20%;left:20%;width:15vw;animation: grow 0.5s linear infinite;">
+			</marquee>	
+		</marquee>
+		<img src="derpy.gif" class="spinner"style="position:absolute;top:5vw;left:50%;">
+		<img src="vinyl.gif" class="grower"style="position:absolute;top:20%;left:20%;width:15vw;">
+		<img src="fuck.webp" class="sexybutton" onclick="fuck()"style="position:absolute;top:60%;left:60%;width:25vw;">
 		<div id="interractivekirkwidget">
 			<div style="display:block;width:15vw;">
 				<h2>Interractive kirk widget</h2>
@@ -49,6 +49,39 @@
 				<img class="rock"src="kirk/take-this-rock.gif">
 			</div>
 		</div>
+		<div id="mlpfuck" style="display:none;">
+			<img src="x.png" onclick="fuck()"class="sexybutton"style="width: 10vw;">
+			<div style="display:flex;">
+				<img class="mlpfuckimg"src="chrysi.gif">
+				<div>
+					<h1>QUEEN CHRYSALIS</h1>
+					<p>because shes hot as fuck ohm ygooodddddd 🥺🥺🥺🥺🥺🥺🥺🥺🥺🥺🥺🥺🥺🥺🥺🥺🥺🥺🥺🥺🥺🥺</p>
+				</div>
+			</div>
+			<div style="display:flex;">
+				<img class="mlpfuckimg"src="tia.gif">
+				<div>
+					<h1>PRINCESS CELESTIA</h1>
+					<p>same reason as above like shes soooo hot and she would take good care of me and such a billion more pleading emojis please please please 🥺🥺🥺🥺🥺🥺🥺🥺🥺🥺🥺🥺🥺🥺🥺🥺🥺🥺🥺🥺🥺🥺</p>
+				</div>
+			</div>
+			<div style="display:flex;">
+				<img class="mlpfuckimg"src="cosmos.jpg">
+				<div>
+					<h1>COSMOS</h1>
+					<p>do i even need to explain</p>
+				</div>
+			</div>
+			<div style="display:flex;">
+				<img class="mlpfuckimg"src="twi.gif">
+				<div>
+					<h1>TWILIGHT SPARKLE</h1>
+					<p>yeah</p>
+				</div>
+			</div>
+		</div>
+		<img src="christmas_pine.png" style="position:absolute;right:10vw;top:80%;">
+	i	<img src="xxx.gif" style="position:fixed;z-index:1000;width:100vw;height:100vh;top:0;pointer-events:none;">
 		</div>
 	</body>
 	<script src=homemain.js></script>

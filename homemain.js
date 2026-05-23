@@ -9,12 +9,18 @@ function saveKirk() {
 function noAudio() {
 	bg.pause();
 }
+function fuck() {
+	fuckr = !fuckr;
+	if(fuckr){document.getElementById("mlpfuck").style="display:block;";}
+	else{document.getElementById("mlpfuck").style="display:none;";}
+}
 function siteBegin() {
 	document.getElementById("entered").style="display:block;";
 	document.getElementById("image").style="display:none;";
 	document.querySelector("html").style="background-image: url('background.png')";
 	bg.play()
 }
+var fuckr = false;
 var kirk = document.getElementById("kirky");
 var crosshair = document.getElementById("crosshair");
 var gunshot = new Audio("kirk/died.mp3");
@@ -27,4 +33,3 @@ document.body.onpointermove = event => {
 		    top: `${clientY-(crosshair.height/2)}px`
 	    }, {duration: 0, fill: "forwards"})
 }
-Marquee3k.init()
