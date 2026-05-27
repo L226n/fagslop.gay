@@ -20,6 +20,12 @@ function siteBegin() {
 	document.querySelector("html").style="background-image: url('background.png')";
 	bg.play()
 }
+function cadance() {
+	bg.pause()
+	var girls = new Audio("girls.mp3");
+	girls.loop = true;
+	girls.play();
+}
 var fuckr = false;
 var kirk = document.getElementById("kirky");
 var crosshair = document.getElementById("crosshair");
